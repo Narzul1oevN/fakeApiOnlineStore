@@ -1,0 +1,212 @@
+openapi: 3.0.3
+info:
+  title: Complex Product API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /items:
+    get:
+      summary: Get all items
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+    post:
+      summary: Create new item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '201':
+          description: Created
+  /items/{id}:
+    get:
+      summary: Get item by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Not Found
+    put:
+      summary: Update item by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete item by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted
+  /cart:
+    get:
+      summary: Get all cart items
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+    post:
+      summary: Add item to cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '201':
+          description: Created
+  /cart/{id}:
+    get:
+      summary: Get cart item by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Not Found
+    put:
+      summary: Update cart item by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete cart item by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted
+components:
+  schemas:
+    Thumbnail:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        width:
+          type: integer
+        height:
+          type: integer
+    Thumbnails:
+      type: object
+      properties:
+        small:
+          $ref: '#/components/schemas/Thumbnail'
+        large:
+          $ref: '#/components/schemas/Thumbnail'
+        full:
+          $ref: '#/components/schemas/Thumbnail'
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+        url:
+          type: string
+          format: uri
+        filename:
+          type: string
+        size:
+          type: integer
+        type:
+          type: string
+        thumbnails:
+          $ref: '#/components/schemas/Thumbnails'
+    Fields:
+      type: object
+      properties:
+        company:
+          type: string
+        colors:
+          type: array
+          items:
+            type: string
+        featured:
+          type: boolean
+        price:
+          type: integer
+        name:
+          type: string
+        image:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        fields:
+          $ref: '#/components/schemas/Fields' 
