@@ -6,13 +6,13 @@ const YAML = require("yamljs");
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000; // Render использует process.env.PORT
 
+// Middleware
 app.use(cors());
-app.options("*", cors());
 app.use(bodyParser.json());
 
-// Пример данных товаров
+// --- ДАННЫЕ ---
 let items = [
   {
     id: "rec43w3ipXvP28vog",
@@ -42,7 +42,6 @@ let items = [
   }
 ];
 
-// Корзина
 let cart = [];
 
 // --- ITEMS ---
@@ -95,13 +94,14 @@ app.delete("/cart/:id", (req, res) => {
   res.sendStatus(204);
 });
 
-// Swagger UI
+// --- Swagger UI ---
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
   swaggerOptions: {
     validatorUrl: null,
   },
 }));
 
+// --- Start ---
 app.listen(port, () => {
   console.log(`✅ Server running on http://localhost:${port}`);
   console.log(`📘 Swagger UI on http://localhost:${port}/api-docs`);
