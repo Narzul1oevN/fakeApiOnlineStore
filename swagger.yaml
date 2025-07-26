@@ -3,7 +3,7 @@ info:
   title: Complex Product API
   version: 1.0.0
 servers:
-  - url: http://localhost:10000
+  - url: https://fakeapionlinestoreadmin.onrender.com  # ✅ Обновили на публичный URL
 paths:
   /items:
     get:
