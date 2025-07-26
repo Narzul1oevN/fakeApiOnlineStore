@@ -3,7 +3,7 @@ info:
   title: Complex Product API
   version: 1.0.0
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:10000
 paths:
   /items:
     get:
@@ -209,4 +209,4 @@ components:
         id:
           type: string
         fields:
-          $ref: '#/components/schemas/Fields' 
+          $ref: '#/components/schemas/Fields'
