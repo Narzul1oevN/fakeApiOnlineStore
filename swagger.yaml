@@ -3,8 +3,46 @@ info:
   title: Complex Product API
   version: 1.0.0
 servers:
-  - url: https://fakeapionlinestoreadmin.onrender.com  # ✅ Обновили на публичный URL
+  - url: https://fakeapionlinestoreadmin.onrender.com
 paths:
+  /auth/register:
+    post:
+      summary: User registration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentials'
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Invalid input
+        '409':
+          description: User already exists
+  /auth/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentials'
+      responses:
+        '200':
+          description: Successful login with JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT token for authentication
+        '401':
+          description: Invalid credentials
   /items:
     get:
       summary: Get all items
@@ -143,8 +181,23 @@ paths:
       responses:
         '204':
           description: Deleted
+
 components:
   schemas:
+    UserCredentials:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: user123
+        password:
+          type: string
+          format: password
+          example: strongPassword123
+
     Thumbnail:
       type: object
       properties:
@@ -155,6 +208,7 @@ components:
           type: integer
         height:
           type: integer
+
     Thumbnails:
       type: object
       properties:
@@ -164,6 +218,7 @@ components:
           $ref: '#/components/schemas/Thumbnail'
         full:
           $ref: '#/components/schemas/Thumbnail'
+
     Image:
       type: object
       properties:
@@ -184,6 +239,7 @@ components:
           type: string
         thumbnails:
           $ref: '#/components/schemas/Thumbnails'
+
     Fields:
       type: object
       properties:
@@ -203,6 +259,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Image'
+
     Item:
       type: object
       properties:
